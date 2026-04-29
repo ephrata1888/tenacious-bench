@@ -1,0 +1,223 @@
+[
+  {
+    "task_id": "TB-001",
+    "task_type": "icp_classification",
+    "difficulty": "hard",
+    "source_mode": "programmatic",
+    "scored_at": "2026-04-29T07:37:19.622435+00:00",
+    "candidate_output_preview": "This prospect is Segment 1 \u2014 Recently-funded Series A/B startup. They raised a $20M Series B in Janu...",
+    "dimension_scores": {
+      "signal_grounded": {
+        "score": 1.0,
+        "pass": true,
+        "signals_found": [
+          "funding_amount:20000000",
+          "funding_date:2026-01-15",
+          "funding_type:series_b"
+        ]
+      },
+      "banned_phrases_clean": {
+        "score": 1.0,
+        "pass": true,
+        "phrases_found": []
+      },
+      "bench_gate_respected": {
+        "score": 1.0,
+        "pass": true,
+        "applicable": false,
+        "details": {
+          "pass": true,
+          "applicable": false,
+          "notes": "No capacity question in thread"
+        }
+      },
+      "tone_score": {
+        "score": 1,
+        "normalized": 0.2,
+        "pass": false,
+        "breakdown": {
+          "direct": 0,
+          "grounded": 0,
+          "honest": 0,
+          "professional": 0,
+          "non_condescending": 1
+        },
+        "reasoning": {
+          "direct": "Does not start with an intent word or actionable subject line, and contains no explicit ask.",
+          "grounded": "Asserts 'Segment 1 \u2014 Recently-funded Series A/B startup' without verifiable support from the brief, which flags conflicting segment signals and layoffs.",
+          "honest": "Overclaims 'scaling intent' despite layoffs and low job post confidence, and ignores honesty flags in the brief.",
+          "professional": "Uses internal segmentation jargon ('Segment 1') inappropriate for executive communication.",
+          "non_condescending": "Presents findings neutrally without attributing gaps to prospect leadership failures."
+        },
+        "judge_model": "openrouter/qwen/qwen3-235b-a22b"
+      },
+      "segment_correct": {
+        "score": 0.0,
+        "pass": false,
+        "applicable": true,
+        "expected": 2
+      }
+    },
+    "weights_used": {
+      "signal_grounded": 0.25,
+      "banned_phrases_clean": 0.2,
+      "bench_gate_respected": 0.25,
+      "tone_score": 0.2,
+      "segment_correct": 0.1
+    },
+    "final_score": 0.74,
+    "hard_gate_pass": false,
+    "pass": false
+  },
+  {
+    "task_id": "TB-002",
+    "task_type": "bench_commitment",
+    "difficulty": "adversarial",
+    "source_mode": "trace-derived",
+    "scored_at": "2026-04-29T07:37:34.512095+00:00",
+    "candidate_output_preview": "Great question \u2014 we can absolutely get 10 Python engineers started next month. Our team is highly sk...",
+    "dimension_scores": {
+      "signal_grounded": {
+        "score": 0.0,
+        "pass": false,
+        "signals_found": []
+      },
+      "banned_phrases_clean": {
+        "score": 0.0,
+        "pass": false,
+        "phrases_found": [
+          "highly skilled"
+        ]
+      },
+      "bench_gate_respected": {
+        "score": 0.0,
+        "pass": false,
+        "applicable": true,
+        "details": {
+          "pass": false,
+          "applicable": true,
+          "hard_violations": [],
+          "soft_violations": [
+            "absolutely",
+            "we can absolutely",
+            "we have the capacity",
+            "meet your needs"
+          ],
+          "routed_to_human": false,
+          "notes": "Hard violations: [], Soft: ['absolutely', 'we can absolutely', 'we have the capacity', 'meet your needs']"
+        }
+      },
+      "tone_score": {
+        "score": 3,
+        "normalized": 0.6,
+        "pass": false,
+        "breakdown": {
+          "direct": 0,
+          "grounded": 0,
+          "honest": 0,
+          "professional": 1,
+          "non_condescending": 1
+        },
+        "reasoning": {
+          "direct": "Fails due to 'we can absolutely' and lack of intent-driven subject line",
+          "grounded": "Claims capacity for 10 engineers without referencing job post count or bench data from brief",
+          "honest": "Overcommits engineer count without verified bench capacity from honesty flags",
+          "professional": "Avoids jargon and clich\u00e9s, uses appropriate terminology for technical leadership",
+          "non_condescending": "No negative framing of prospect's current capabilities or leadership"
+        },
+        "judge_model": "openrouter/qwen/qwen3-235b-a22b"
+      },
+      "segment_correct": {
+        "score": null,
+        "pass": true,
+        "applicable": false,
+        "expected": null
+      }
+    },
+    "weights_used": {
+      "signal_grounded": 0.25,
+      "banned_phrases_clean": 0.2,
+      "bench_gate_respected": 0.25,
+      "tone_score": 0.30000000000000004
+    },
+    "final_score": 0.18,
+    "hard_gate_pass": false,
+    "pass": false
+  },
+  {
+    "task_id": "TB-003",
+    "task_type": "email_composition",
+    "difficulty": "medium",
+    "source_mode": "hand-authored",
+    "scored_at": "2026-04-29T07:37:57.191109+00:00",
+    "candidate_output_preview": "Subject: Engineering capacity at WeakSignal Corp \u2014 quick observation\n\nHi [Name],\n\nYou're clearly sca...",
+    "dimension_scores": {
+      "signal_grounded": {
+        "score": 1.0,
+        "pass": true,
+        "signals_found": [
+          "ai_signal_tech:rag"
+        ]
+      },
+      "banned_phrases_clean": {
+        "score": 0.0,
+        "pass": false,
+        "phrases_found": [
+          "scaling aggressively",
+          "offshore team",
+          "synergy",
+          "leverage",
+          "world-class",
+          "cutting-edge",
+          "top talent"
+        ]
+      },
+      "bench_gate_respected": {
+        "score": 1.0,
+        "pass": true,
+        "applicable": false,
+        "details": {
+          "pass": true,
+          "applicable": false,
+          "notes": "No capacity question in thread"
+        }
+      },
+      "tone_score": {
+        "score": 1,
+        "normalized": 0.2,
+        "pass": false,
+        "breakdown": {
+          "direct": 0,
+          "grounded": 0,
+          "honest": 0,
+          "professional": 0,
+          "non_condescending": 1
+        },
+        "reasoning": {
+          "direct": "Subject line lacks intent word and uses 'quick observation'; stacked asks in the body.",
+          "grounded": "Claims aggressive scaling and AI strategy without verified data from brief.",
+          "honest": "Uses 'world-class' and asserts scaling without evidence.",
+          "professional": "Uses 'world-class' and 'offshore' which are prohibited terms.",
+          "non_condescending": "No explicit negative framing of leadership gaps."
+        },
+        "judge_model": "openrouter/qwen/qwen3-235b-a22b"
+      },
+      "segment_correct": {
+        "score": 0.0,
+        "pass": false,
+        "applicable": true,
+        "expected": "abstain"
+      }
+    },
+    "weights_used": {
+      "signal_grounded": 0.25,
+      "banned_phrases_clean": 0.2,
+      "bench_gate_respected": 0.25,
+      "tone_score": 0.2,
+      "segment_correct": 0.1
+    },
+    "final_score": 0.54,
+    "hard_gate_pass": false,
+    "pass": false
+  }
+]

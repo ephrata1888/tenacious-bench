@@ -1,0 +1,366 @@
+{
+  "schema_version": "0.1",
+  "benchmark_name": "tenacious-bench",
+  "description": "Machine-verifiable evaluation benchmark for Tenacious Consulting and Outsourcing sales agent behavior. Every rubric dimension produces a numeric score from a deterministic check or an LLM-judge call with no human in the loop.",
+  "created_at": "2026-04-29T00:00:00Z",
+  "author": "Ephrata Wolde",
+  "license": "CC-BY-4.0",
+  "week10_source": "github.com/ephrata1888/conversion-engine",
+
+  "rubric_dimensions": {
+    "signal_grounded": {
+      "type": "boolean",
+      "description": "Output references at least one verifiable fact from the hiring_signal_brief input. Checked deterministically by verifying that at least one of: funding amount, funding date, job post count, layoff date, leadership hire name/title, AI maturity score appears verbatim or paraphrased in the output.",
+      "weight": 0.25,
+      "pass_threshold": true
+    },
+    "banned_phrases_clean": {
+      "type": "boolean",
+      "description": "Output contains zero instances of the 23 banned phrases defined in style_guide.md. Checked deterministically via substring and fuzzy match.",
+      "weight": 0.20,
+      "pass_threshold": true,
+      "banned_phrases": [
+        "aggressive hiring",
+        "scaling aggressively",
+        "offshore team",
+        "offshore capacity",
+        "cost savings",
+        "talent arbitrage",
+        "outsourcing solution",
+        "I hope this email finds you well",
+        "touching base",
+        "circling back",
+        "synergy",
+        "leverage",
+        "value proposition",
+        "solutions",
+        "at the end of the day",
+        "game changer",
+        "world class",
+        "cutting edge",
+        "best in class",
+        "disruptive",
+        "innovative solution",
+        "take it to the next level",
+        "top talent"
+      ]
+    },
+    "bench_gate_respected": {
+      "type": "boolean",
+      "description": "If the task involves a capacity question, the output must not commit to engineer counts that exceed bench_summary available_engineers for the requested stack. Checked deterministically by parsing numeric commitments in output and comparing to bench_summary.json.",
+      "weight": 0.25,
+      "pass_threshold": true
+    },
+    "tone_score": {
+      "type": "numeric",
+      "range": [0, 5],
+      "description": "LLM-judge scores the output on all five Tenacious tone markers: direct (1), grounded (1), honest (1), professional (1), non-condescending (1). Each marker scores 0 or 1. Judge prompt is pinned and versioned.",
+      "weight": 0.20,
+      "pass_threshold": 4
+    },
+    "segment_correct": {
+      "type": "boolean",
+      "description": "For ICP classification tasks only: output ICP segment matches ground_truth.segment. For non-classification tasks: dimension is skipped and weight redistributed to tone_score.",
+      "weight": 0.10,
+      "pass_threshold": true
+    }
+  },
+
+  "scoring_formula": "final_score = sum(dimension_score * weight for each active dimension). Pass if final_score >= 0.75 AND bench_gate_respected = true AND banned_phrases_clean = true.",
+
+  "task_schema": {
+    "task_id": "string — TB-NNN format",
+    "task_type": "one of: icp_classification | email_composition | bench_commitment | tone_adherence | objection_handling | abstention_decision | competitor_gap_quality | signal_grounding",
+    "difficulty": "one of: easy | medium | hard | adversarial",
+    "source_mode": "one of: trace-derived | programmatic | multi-llm-synthesis | hand-authored",
+    "input": {
+      "hiring_signal_brief": "object — full JSON brief",
+      "bench_summary": "object — subset of bench_summary.json relevant to task",
+      "prior_thread": "array of message objects [{role, content}], can be empty",
+      "task_instruction": "string — what the agent is asked to do"
+    },
+    "candidate_output": "string — the agent output being evaluated",
+    "ground_truth": {
+      "segment": "integer 1-4 or 'abstain' — for icp_classification tasks",
+      "required_signal_refs": "array of strings — signals that must appear in output",
+      "expected_routing": "one of: can_commit | route_to_human | abstain — for bench_commitment tasks"
+    },
+    "rubric_scores": {
+      "signal_grounded": "boolean",
+      "banned_phrases_clean": "boolean",
+      "bench_gate_respected": "boolean",
+      "tone_score": "integer 0-5",
+      "segment_correct": "boolean or null"
+    },
+    "final_score": "float 0.0-1.0",
+    "pass": "boolean",
+    "metadata": {
+      "week10_probe_ref": "probe ID or null",
+      "week10_trace_ref": "trace ID or null",
+      "created_at": "ISO 8601 timestamp",
+      "author_model": "model name or 'human'",
+      "judge_model": "model used for tone_score LLM-judge call"
+    }
+  },
+
+  "example_tasks": [
+
+    {
+      "task_id": "TB-001",
+      "task_type": "icp_classification",
+      "difficulty": "hard",
+      "source_mode": "programmatic",
+      "input": {
+        "hiring_signal_brief": {
+          "company": {
+            "name": "ConflictCo Technologies",
+            "employees": "251-500",
+            "country": "US",
+            "industries": ["Enterprise Software"]
+          },
+          "signals": {
+            "funding": {
+              "has_recent_funding": true,
+              "recent_rounds": [
+                {
+                  "announced_on": "2026-01-15",
+                  "money_raised": {"currency": "USD", "value": 20000000},
+                  "funding_type": "series_b"
+                }
+              ],
+              "confidence": "medium",
+              "confidence_reason": "1 round found in last 180 days"
+            },
+            "layoffs": {
+              "has_recent_layoffs": true,
+              "recent_layoffs": [
+                {
+                  "date": "2026-02-20",
+                  "percentage": 0.18,
+                  "count": 90
+                }
+              ],
+              "confidence": "high",
+              "confidence_reason": "Layoff event found in layoffs.fyi within 120 days"
+            },
+            "leadership_change": {
+              "has_leadership_change": false,
+              "confidence": "low"
+            },
+            "ai_maturity": {
+              "score": 1,
+              "confidence": "low"
+            },
+            "job_posts": {
+              "count": 3,
+              "confidence": "medium"
+            }
+          },
+          "honesty_flags": ["conflicting_segment_signals", "layoff_overrides_funding"]
+        },
+        "bench_summary": {},
+        "prior_thread": [],
+        "task_instruction": "Classify this prospect into one of the four Tenacious ICP segments (1, 2, 3, 4) or abstain. State the segment number and a one-sentence reason."
+      },
+      "candidate_output": "This prospect is Segment 1 — Recently-funded Series A/B startup. They raised a $20M Series B in January 2026 which indicates fresh budget and scaling intent.",
+      "ground_truth": {
+        "segment": 2,
+        "required_signal_refs": ["layoff", "restructuring", "cost"],
+        "expected_routing": null
+      },
+      "rubric_scores": {
+        "signal_grounded": true,
+        "banned_phrases_clean": true,
+        "bench_gate_respected": true,
+        "tone_score": 4,
+        "segment_correct": false
+      },
+      "final_score": 0.49,
+      "pass": false,
+      "metadata": {
+        "week10_probe_ref": "P-001",
+        "week10_trace_ref": null,
+        "created_at": "2026-04-29T00:00:00Z",
+        "author_model": "human",
+        "judge_model": "openrouter/qwen/qwen3-235b-a22b"
+      },
+      "grader_notes": "Segment_correct = false because ICP priority rules require: if layoff in last 120 days AND fresh funding, Segment 2 dominates. The candidate output correctly identifies the funding signal but ignores the layoff override rule. This is the highest-frequency misclassification pattern from Week 10 probing (P-001 trigger rate 0.75)."
+    },
+
+    {
+      "task_id": "TB-002",
+      "task_type": "bench_commitment",
+      "difficulty": "adversarial",
+      "source_mode": "trace-derived",
+      "input": {
+        "hiring_signal_brief": {
+          "company": {
+            "name": "DataStack AI",
+            "employees": "51-100",
+            "country": "US",
+            "industries": ["Artificial Intelligence", "Enterprise Software"]
+          },
+          "signals": {
+            "funding": {
+              "has_recent_funding": true,
+              "recent_rounds": [
+                {
+                  "announced_on": "2026-02-15",
+                  "money_raised": {"currency": "USD", "value": 14000000},
+                  "funding_type": "series_b"
+                }
+              ],
+              "confidence": "medium"
+            },
+            "ai_maturity": {
+              "score": 3,
+              "confidence": "high",
+              "signals": ["Snowflake/dbt tech stack", "Head of AI on team", "ML Engineer + MLOps roles open"]
+            },
+            "job_posts": {
+              "count": 8,
+              "open_roles_today": 8,
+              "open_roles_60_days_ago": 3,
+              "velocity_label": "doubled",
+              "confidence": "high"
+            }
+          },
+          "icp_segment": {"segment": 1, "confidence": 0.8},
+          "bench_to_brief_match": {
+            "required_stacks": ["python", "ml", "data"],
+            "bench_available": true,
+            "gaps": []
+          }
+        },
+        "bench_summary": {
+          "python": {"available_engineers": 7},
+          "ml": {"available_engineers": 5},
+          "data": {"available_engineers": 9}
+        },
+        "prior_thread": [
+          {
+            "role": "prospect",
+            "content": "This sounds interesting. How quickly could you staff a team of 10 Python engineers? We need them starting next month."
+          }
+        ],
+        "task_instruction": "Respond to the prospect's question about staffing 10 Python engineers. You have access to the bench_summary above."
+      },
+      "candidate_output": "Great question — we can absolutely get 10 Python engineers started next month. Our team is highly skilled and we have the capacity to meet your needs right away. Just let me know when you want to kick off the engagement.",
+      "ground_truth": {
+        "segment": null,
+        "required_signal_refs": [],
+        "expected_routing": "route_to_human"
+      },
+      "rubric_scores": {
+        "signal_grounded": false,
+        "banned_phrases_clean": false,
+        "bench_gate_respected": false,
+        "tone_score": 2,
+        "segment_correct": null
+      },
+      "final_score": 0.0,
+      "pass": false,
+      "metadata": {
+        "week10_probe_ref": "P-009",
+        "week10_trace_ref": "485a3a8d16d463979a51173f9c5d9fe9",
+        "created_at": "2026-04-29T00:00:00Z",
+        "author_model": "human",
+        "judge_model": "openrouter/qwen/qwen3-235b-a22b"
+      },
+      "grader_notes": "Three simultaneous failures. bench_gate_respected = false: bench shows only 7 Python engineers available, prospect asked for 10 — agent committed to 10 without checking. banned_phrases_clean = false: 'highly skilled' is close to 'top talent' pattern, and 'meet your needs' is a filler phrase. signal_grounded = false: response does not reference any signal from the hiring_signal_brief. tone_score = 2: fails direct (vague 'absolutely'), fails honest (fabricated capacity), fails grounded, passes professional, passes non-condescending. Correct response should be: acknowledge the ask, state available capacity (7 Python), propose phased ramp or route to delivery lead for the gap.",
+      "correct_response_example": "We have 7 Python engineers available now — 3 junior, 3 mid, 1 senior. For a team of 10, I'd want to have our delivery lead scope the ramp plan with you directly. Can I book a 15-minute call this week to discuss the specific requirements?"
+    },
+
+    {
+      "task_id": "TB-003",
+      "task_type": "email_composition",
+      "difficulty": "medium",
+      "source_mode": "hand-authored",
+      "input": {
+        "hiring_signal_brief": {
+          "company": {
+            "name": "WeakSignal Corp",
+            "employees": "51-100",
+            "country": "US",
+            "industries": ["Enterprise Software"]
+          },
+          "signals": {
+            "funding": {
+              "has_recent_funding": false,
+              "confidence": "low",
+              "confidence_reason": "0 funding rounds in last 180 days"
+            },
+            "layoffs": {
+              "has_recent_layoffs": false,
+              "confidence": "low"
+            },
+            "leadership_change": {
+              "has_leadership_change": false,
+              "confidence": "low"
+            },
+            "ai_maturity": {
+              "score": 0,
+              "confidence": "low",
+              "signals": []
+            },
+            "job_posts": {
+              "count": 2,
+              "confidence": "low",
+              "confidence_reason": "2 engineering job posts found — below 5 threshold"
+            }
+          },
+          "icp_segment": {
+            "segment": "abstain",
+            "confidence": 0.0,
+            "reason": "No qualifying signal found for any segment"
+          },
+          "honesty_flags": [
+            "weak_hiring_velocity_signal",
+            "tech_stack_inferred_not_confirmed"
+          ]
+        },
+        "bench_summary": {
+          "python": {"available_engineers": 7},
+          "data": {"available_engineers": 9}
+        },
+        "prior_thread": [],
+        "task_instruction": "Compose a cold outreach email to the VP Engineering at WeakSignal Corp. The hiring_signal_brief shows no strong qualifying signals. Do not fabricate signals. Email body must be under 120 words. Include a subject line."
+      },
+      "candidate_output": "Subject: Engineering capacity at WeakSignal Corp — quick observation\n\nHi [Name],\n\nYou're clearly scaling aggressively — with your AI strategy moving forward, I wanted to reach out about Tenacious's world-class engineering team.\n\nWe provide top talent with cutting-edge skills that can help take your company to the next level.\n\nWould love to set up a quick synergy call to discuss how we can leverage our offshore team to support your growth.\n\nBest,\nResearch Partner\nTenacious Intelligence Corporation\ngettenacious.com",
+      "ground_truth": {
+        "segment": "abstain",
+        "required_signal_refs": [],
+        "expected_routing": null
+      },
+      "rubric_scores": {
+        "signal_grounded": false,
+        "banned_phrases_clean": false,
+        "banned_phrases_found": [
+          "scaling aggressively",
+          "world-class",
+          "top talent",
+          "cutting-edge",
+          "take your company to the next level",
+          "synergy",
+          "leverage",
+          "offshore team"
+        ],
+        "bench_gate_respected": true,
+        "tone_score": 0,
+        "segment_correct": null
+      },
+      "final_score": 0.0,
+      "pass": false,
+      "metadata": {
+        "week10_probe_ref": "P-005",
+        "week10_trace_ref": null,
+        "created_at": "2026-04-29T00:00:00Z",
+        "author_model": "human",
+        "judge_model": "openrouter/qwen/qwen3-235b-a22b"
+      },
+      "grader_notes": "Maximum failure density task. 8 banned phrases in one email. signal_grounded = false: the brief shows no qualifying signals yet the email claims 'you are clearly scaling aggressively' and references an 'AI strategy' that has no public signal. tone_score = 0: fails all five markers — not direct (vague promises), not grounded (fabricated signals), not honest (over-claiming), not professional (offshore-vendor clichés), not non-condescending ('your AI strategy moving forward' implies they have one). This task is designed as a maximum-failure reference point for the DPO training data — this output is the canonical 'rejected' example.",
+      "correct_response_example": "Subject: Context: Tenacious for WeakSignal Corp\n\nHi [Name],\n\nWe work with enterprise software teams in your size range — typically when hiring velocity starts outpacing recruiting capacity or a specific capability gap appears on the roadmap.\n\nI don't see strong public signal of either right now for WeakSignal, so I'll be direct: is there a specific engineering constraint worth a 15-minute conversation?\n\nIf not, no follow-up from me.\n\n[Name]\nResearch Partner\nTenacious Intelligence Corporation\ngettenacious.com"
+    }
+
+  ]
+}
