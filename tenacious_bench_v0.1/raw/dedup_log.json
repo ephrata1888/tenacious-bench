@@ -1,0 +1,111 @@
+{
+  "input_count": 184,
+  "kept_count": 125,
+  "removed_count": 59,
+  "dedup_rate": 0.321,
+  "threshold": 0.85,
+  "ngram_n": 4,
+  "removed_pairs": [
+    {
+      "task_id": "TB-ML-005",
+      "duplicate_of": "TB-ML-002",
+      "similarity": 1.0
+    },
+    {
+      "task_id": "TB-ML-007",
+      "duplicate_of": "TB-ML-001",
+      "similarity": 1.0
+    },
+    {
+      "task_id": "TB-ML-008",
+      "duplicate_of": "TB-ML-002",
+      "similarity": 1.0
+    },
+    {
+      "task_id": "TB-ML-009",
+      "duplicate_of": "TB-ML-006",
+      "similarity": 1.0
+    },
+    {
+      "task_id": "TB-ML-010",
+      "duplicate_of": "TB-ML-004",
+      "similarity": 1.0
+    },
+    {
+      "task_id": "TB-ML-013",
+      "duplicate_of": "TB-ML-004",
+      "similarity": 1.0
+    },
+    {
+      "task_id": "TB-ML-014",
+      "duplicate_of": "TB-ML-011",
+      "similarity": 1.0
+    },
+    {
+      "task_id": "TB-ML-021",
+      "duplicate_of": "TB-ML-018",
+      "similarity": 1.0
+    },
+    {
+      "task_id": "TB-ML-022",
+      "duplicate_of": "TB-ML-016",
+      "similarity": 1.0
+    },
+    {
+      "task_id": "TB-ML-024",
+      "duplicate_of": "TB-ML-006",
+      "similarity": 1.0
+    },
+    {
+      "task_id": "TB-ML-026",
+      "duplicate_of": "TB-ML-020",
+      "similarity": 1.0
+    },
+    {
+      "task_id": "TB-ML-027",
+      "duplicate_of": "TB-ML-003",
+      "similarity": 1.0
+    },
+    {
+      "task_id": "TB-ML-028",
+      "duplicate_of": "TB-ML-025",
+      "similarity": 1.0
+    },
+    {
+      "task_id": "TB-ML-029",
+      "duplicate_of": "TB-ML-017",
+      "similarity": 1.0
+    },
+    {
+      "task_id": "TB-ML-030",
+      "duplicate_of": "TB-ML-012",
+      "similarity": 1.0
+    },
+    {
+      "task_id": "TB-ML-031",
+      "duplicate_of": "TB-ML-019",
+      "similarity": 1.0
+    },
+    {
+      "task_id": "TB-ML-032",
+      "duplicate_of": "TB-ML-017",
+      "similarity": 1.0
+    },
+    {
+      "task_id": "TB-ML-033",
+      "duplicate_of": "TB-ML-003",
+      "similarity": 1.0
+    },
+    {
+      "task_id": "TB-ML-034",
+      "duplicate_of": "TB-ML-019",
+      "similarity": 1.0
+    },
+    {
+      "task_id": "TB-ML-035",
+      "duplicate_of": "TB-ML-002",
+      "similarity": 1.0
+    }
+  ],
+  "run_at": "2026-04-29T09:15:51.616795+00:00"
+}

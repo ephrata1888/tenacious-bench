@@ -1,0 +1,17 @@
+{
+  "script": "generate_programmatic.py",
+  "seed": 42,
+  "tasks_generated": 50,
+  "task_type_distribution": {
+    "icp_classification": 20,
+    "bench_commitment": 20,
+    "abstention_decision": 10
+  },
+  "difficulty_distribution": {
+    "easy": 16,
+    "hard": 8,
+    "medium": 17,
+    "adversarial": 9
+  },
+  "run_at": "2026-04-29T08:43:36.472949+00:00"
+}

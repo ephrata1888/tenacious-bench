@@ -1,0 +1,23 @@
+{
+  "run_at": "2026-04-29T10:07:28.845745+00:00",
+  "train_count": 77,
+  "held_out_count": 13,
+  "ngram_check": {
+    "method": "8-gram jaccard overlap",
+    "threshold": 0.95,
+    "flagged": 0,
+    "flagged_tasks": []
+  },
+  "embedding_check": {
+    "method": "tfidf_cosine",
+    "threshold": 0.85,
+    "flagged": 0,
+    "flagged_tasks": []
+  },
+  "timeshift_check": {
+    "flagged": 0,
+    "flagged_tasks": []
+  },
+  "total_flagged": 0,
+  "status": "pass"
+}

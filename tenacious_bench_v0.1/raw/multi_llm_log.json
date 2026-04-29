@@ -1,0 +1,30 @@
+{
+  "script": "generate_multi_llm.py",
+  "seed": 42,
+  "generator_model": "template",
+  "judge_model": "simulated",
+  "preference_leakage_prevention": "different model families: Anthropic (generator) vs Alibaba (judge)",
+  "judge_filter_range": [
+    0.2,
+    0.7
+  ],
+  "attempts": 110,
+  "kept": 74,
+  "filtered": 36,
+  "filter_rate": 0.327,
+  "tasks_generated": 74,
+  "task_type_distribution": {
+    "objection_handling": 15,
+    "signal_grounding": 14,
+    "email_composition": 17,
+    "competitor_gap_quality": 15,
+    "tone_adherence": 13
+  },
+  "difficulty_distribution": {
+    "adversarial": 26,
+    "hard": 24,
+    "medium": 24
+  },
+  "dry_run": true,
+  "run_at": "2026-04-29T08:52:05.734157+00:00"
+}

@@ -1,0 +1,13 @@
+{
+  "script": "generate_trace_derived.py",
+  "seed": 42,
+  "source": "../conversion-engine/eval/trace_log.jsonl",
+  "tasks_generated": 60,
+  "task_type_distribution": {
+    "email_composition": 60
+  },
+  "difficulty_distribution": {
+    "hard": 60
+  },
+  "run_at": "2026-04-29T08:43:36.741834+00:00"
+}

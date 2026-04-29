@@ -1,0 +1,12 @@
+date,item,provider,cost_usd,notes
+2026-04-29,tau2-bench baseline runs (105 valid),OpenRouter,3.00,Qwen3-235b-a22b 105 runs at ~$0.03/run
+2026-04-29,ablation test (10 probes x3 conditions),OpenRouter,0.30,bench_policy ablation
+2026-04-29,pipeline latency runs (20 runs),OpenRouter,0.60,main_agent.py 20 iterations
+2026-04-29,HubSpot sandbox,HubSpot,0.00,Developer sandbox free tier
+2026-04-29,Resend email sends,Resend,0.00,Free tier
+2026-04-29,Africa's Talking SMS,Africa's Talking,0.02,Sandbox test sends
+2026-04-29,Cal.com bookings,Cal.com,0.00,Free tier
+2026-04-29,Langfuse traces,Langfuse,0.00,Free tier 50K traces
+2026-04-29,scoring_evaluator tone judge (3 tasks),OpenRouter,0.01,TB-001 TB-002 TB-003
+2026-04-29,Week 11 generation scripts (dry run),OpenRouter,0.00,Dry run mode no API calls
+2026-04-29,TOTAL,,3.93,
