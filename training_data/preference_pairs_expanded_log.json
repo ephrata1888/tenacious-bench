@@ -1,0 +1,16 @@
+{
+  "total": 112,
+  "types": {
+    "bench_commitment": 81,
+    "objection_handling": 20,
+    "email_composition": 9,
+    "signal_grounding": 1,
+    "competitor_gap_quality": 1
+  },
+  "diffs": {
+    "hard": 40,
+    "medium": 55,
+    "adversarial": 17
+  },
+  "run_at": "2026-04-30T22:18:55.828773+00:00"
+}

@@ -1,0 +1,14 @@
+{
+  "script": "build_preference_pairs.py",
+  "seed": 42,
+  "total_pairs": 10,
+  "task_type_distribution": {
+    "bench_commitment": 1,
+    "objection_handling": 5,
+    "email_composition": 2,
+    "competitor_gap_quality": 1,
+    "signal_grounding": 1
+  },
+  "preference_leakage_prevention": "Chosen outputs sourced from Tenacious human transcripts (not LLM-generated). Rejected outputs are intentional failures matching Week 10 probe patterns. No model generated both chosen and rejected for same pair.",
+  "run_at": "2026-04-30T22:00:57.193273+00:00"
+}

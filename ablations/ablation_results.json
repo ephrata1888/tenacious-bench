@@ -1,0 +1,13 @@
+{
+  "run_at": "2026-04-30T23:19:28.106637+00:00",
+  "n_tasks": 5,
+  "baseline_avg": 0.3,
+  "trained_avg": 0.6,
+  "prompt_opt_avg": 0.7,
+  "delta_a": 0.3,
+  "delta_b": -0.1,
+  "honest_assessment": "Training ran and converged (loss 4.58->3.89, accuracies 0.15->0.40). However at inference time the model reverts to generic vendor language due to prompt format mismatch between training and inference. The ORPO signal was learned in the wrong prompt format. Delta A is the honest result - not inflated.",
+  "training_did_converge": true,
+  "inference_format_mismatch": true,
+  "pivot_taken": "Pivot B - report Delta A honestly per kill criterion"
+}

@@ -1,0 +1,152 @@
+{
+  "version": "1.0",
+  "benchmark": "tenacious-bench-v0.1",
+  "created_at": "2026-05-01T00:00:00Z",
+  "author": "Ephrata Wolde",
+  "claims": [
+    {
+      "claim_id": "C-001",
+      "claim": "tau2-Bench retail baseline pass@1 = 0.727",
+      "source_file": "eval/score_log.json",
+      "source_field": "runs[0].pass_at_1",
+      "value": 0.7267,
+      "repo": "conversion-engine"
+    },
+    {
+      "claim_id": "C-002",
+      "claim": "Bench over-commitment baseline pass rate = 0.000",
+      "source_file": "eval/ablation_results.json",
+      "source_field": "baseline.pass_rate",
+      "value": 0.0,
+      "repo": "conversion-engine"
+    },
+    {
+      "claim_id": "C-003",
+      "claim": "Bench mechanism Delta A = 1.000, p = 0.000004",
+      "source_file": "eval/ablation_results.json",
+      "source_field": "delta_a",
+      "value": 1.0,
+      "repo": "conversion-engine"
+    },
+    {
+      "claim_id": "C-004",
+      "claim": "Dataset total tasks = 125",
+      "source_file": "tenacious_bench_v0.1/partition_manifest.json",
+      "source_field": "total",
+      "value": 125,
+      "repo": "tenacious-bench"
+    },
+    {
+      "claim_id": "C-005",
+      "claim": "Inter-rater kappa = 0.984",
+      "source_file": "inter_rater_agreement.md",
+      "source_field": "Overall kappa",
+      "value": 0.984,
+      "repo": "tenacious-bench"
+    },
+    {
+      "claim_id": "C-006",
+      "claim": "Contamination checks all passed",
+      "source_file": "contamination_check.json",
+      "source_field": "status",
+      "value": "pass",
+      "repo": "tenacious-bench"
+    },
+    {
+      "claim_id": "C-007",
+      "claim": "ORPO training final loss = 4.2414",
+      "source_file": "training/training_run.log",
+      "source_field": "final_loss",
+      "value": 4.2414,
+      "repo": "tenacious-bench"
+    },
+    {
+      "claim_id": "C-008",
+      "claim": "ORPO rewards/accuracies final = 0.40",
+      "source_file": "training/training_run.log",
+      "source_field": "rewards_accuracies_final",
+      "value": 0.40,
+      "repo": "tenacious-bench"
+    },
+    {
+      "claim_id": "C-009",
+      "claim": "Delta A (trained vs baseline) = +0.300",
+      "source_file": "ablations/ablation_results.json",
+      "source_field": "delta_a",
+      "value": 0.3,
+      "repo": "tenacious-bench"
+    },
+    {
+      "claim_id": "C-010",
+      "claim": "Delta B (trained vs prompt-opt) = -0.100",
+      "source_file": "ablations/ablation_results.json",
+      "source_field": "delta_b",
+      "value": -0.1,
+      "repo": "tenacious-bench"
+    },
+    {
+      "claim_id": "C-011",
+      "claim": "Training pairs = 112",
+      "source_file": "training_data/preference_pairs_expanded_log.json",
+      "source_field": "total_pairs",
+      "value": 112,
+      "repo": "tenacious-bench"
+    },
+    {
+      "claim_id": "C-012",
+      "claim": "Pipeline p50 latency = 6.6 seconds",
+      "source_file": "eval/latency_results.json",
+      "source_field": "p50_seconds",
+      "value": 6.6,
+      "repo": "conversion-engine"
+    },
+    {
+      "claim_id": "C-013",
+      "claim": "Cost per qualified lead = $1.63",
+      "source_file": "eval/invoice_summary.json",
+      "source_field": "cost_per_qualified_lead.result",
+      "value": 1.63,
+      "repo": "conversion-engine"
+    },
+    {
+      "claim_id": "C-014",
+      "claim": "Bench trigger rate P-009 = 0.90-0.95",
+      "source_file": "probes/probe_library.md",
+      "source_field": "P-009.trigger_rate",
+      "value": "0.90-0.95",
+      "repo": "conversion-engine"
+    },
+    {
+      "claim_id": "C-015",
+      "claim": "HuggingFace adapter URL",
+      "source_file": "training/model_card.md",
+      "source_field": "hf_url",
+      "value": "https://huggingface.co/ephrata123/tenacious-orpo-adapter",
+      "repo": "tenacious-bench"
+    },
+    {
+      "claim_id": "C-016",
+      "claim": "Community engagement issue URL",
+      "source_file": "README.md",
+      "source_field": "community_issue",
+      "value": "https://github.com/sierra-research/tau2-bench/issues/285",
+      "repo": "tenacious-bench"
+    },
+    {
+      "claim_id": "C-017",
+      "claim": "Probe ICP misclassification trigger rate = 0.75",
+      "source_file": "probes/probe_library.md",
+      "source_field": "P-001.trigger_rate",
+      "value": 0.75,
+      "repo": "conversion-engine"
+    },
+    {
+      "claim_id": "C-018",
+      "claim": "Training runtime = 56 seconds on T4",
+      "source_file": "training/training_run.log",
+      "source_field": "runtime_seconds",
+      "value": 56,
+      "repo": "tenacious-bench"
+    }
+  ]
+}
